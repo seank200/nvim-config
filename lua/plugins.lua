@@ -16,84 +16,106 @@ vim.cmd([[
   augroup packer_user_config
     autocmd!
     autocmd BufWritePost plugins.lua source <afile> | PackerSync
-    autocmd BufWritePost lua/plugin-config.lua source <afile> | PackerCompile | echo("Recompiled")
+    autocmd BufWritePost plugin-config.lua source <afile> | PackerCompile | echo("Recompiled")
   augroup end
 ]])
 
 local packer_bootstrap = ensure_packer()
 
-return require('packer').startup(function(use)
-  -- Package managers
-  use 'wbthomason/packer.nvim'
+return require('packer').startup({
+  function(use)
+    -- Packer manages itself
+    use 'wbthomason/packer.nvim'
 
-  -- LSP-related
-  use {
-    'williamboman/mason.nvim',
-    run = ':MasonUpdate',
-    config = configs.mason,
-  }
-  use {
-    "williamboman/mason-lspconfig.nvim",
-    requires = { "williamboman/mason.nvim" },
-    after = {"mason.nvim", "nvim-lspconfig" },
-    config = configs.mason_lspconfig,
-  }
-  use {
-    "neovim/nvim-lspconfig",
-    after = { "mason.nvim" },
-  }
-  use {
-    "nvim-treesitter/nvim-treesitter",
-    run = ":TSUpdate",
-    config = configs.nvim_treesitter,
-  }
-  use {
-    'numToStr/Comment.nvim',
-    config = configs.Comment,
-    after = 'nvim-treesitter',
-  }
+    -- LSP-related
+    use {
+      'williamboman/mason.nvim',
+      run = ':MasonUpdate',
+      config = configs.mason,
+    }
+    use {
+      "williamboman/mason-lspconfig.nvim",
+      requires = { "williamboman/mason.nvim", "neovim/nvim-lspconfig", "hrsh7th/nvim-cmp" },
+      after = {"mason.nvim", "nvim-lspconfig" },
+      config = configs.mason_lspconfig,
+    }
+    use {
+      "neovim/nvim-lspconfig",
+      after = { "mason.nvim" } ,
+    }
+    use {
+      "nvim-treesitter/nvim-treesitter",
+      run = ":TSUpdate",
+      config = configs.nvim_treesitter,
+    }
+    use {
+      'numToStr/Comment.nvim',
+      config = configs.Comment,
+      after = 'nvim-treesitter',
+    }
 
-  -- Colors/Icons
-  use 'AlexvZyl/nordic.nvim'
-  use {
-    'nvim-tree/nvim-web-devicons',
-    config = configs.nvim_web_devicons,
-  }
+    -- Colors/Icons
+    use 'AlexvZyl/nordic.nvim'
+    use {
+      'nvim-tree/nvim-web-devicons',
+      config = configs.nvim_web_devicons,
+    }
 
-  -- Navigation/Search
-  use {
-    'nvim-tree/nvim-tree.lua',
-    config = configs.nvimtree,
-  }
-  use {
-    'nvim-telescope/telescope.nvim', tag = '0.1.2',
-    requires = { 'nvim-lua/plenary.nvim' },
-    config = configs.telescope
-  }
+    -- Navigation/Search
+    use {
+      'nvim-tree/nvim-tree.lua',
+      config = configs.nvimtree,
+    }
+    use {
+      'nvim-telescope/telescope.nvim', tag = '0.1.2',
+      requires = { 'nvim-lua/plenary.nvim' },
+      config = configs.telescope
+    }
 
-  -- Status
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = { "nvim-tree/nvim-web-devicons" },
-    config = configs.lualine,
-  }
-  use {
-    "folke/trouble.nvim",
-    requires = { "nvim-tree/nvim-web-devicons" }
-  }
+    -- Status
+    use {
+      'nvim-lualine/lualine.nvim',
+      requires = { "nvim-tree/nvim-web-devicons" },
+      config = configs.lualine,
+    }
+    use {
+      "folke/trouble.nvim",
+      requires = { "nvim-tree/nvim-web-devicons" }
+    }
 
-  -- Utilities
-  use 'nvim-lua/plenary.nvim'
-  use {
-    'iamcco/markdown-preview.nvim',
-    run = 'cd app && npm install',
-    setup = configs.markdown_preview,
-    ft = {'markdown'},
-  }
+    -- Autocomplete
+    use {
+      'hrsh7th/nvim-cmp',
+      requires = {
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-path',
+        'hrsh7th/cmp-cmdline',
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-vsnip',
+        'hrsh7th/vim-vsnip',
+      },
+      config = configs.nvim_cmp,
+    }
 
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if packer_bootstrap then
-    require('packer').sync()
-  end
-end)
+    -- Utilities
+    use 'nvim-lua/plenary.nvim'
+    use {
+      'iamcco/markdown-preview.nvim',
+      run = 'cd app && npm install',
+      setup = configs.markdown_preview,
+      ft = {'markdown'},
+    }
+
+    -- Automatically set up your configuration after cloning packer.nvim
+    -- Put this at the end after all plugins
+    if packer_bootstrap then
+      require('packer').sync()
+    end
+  end,
+
+  config = {
+    display = {
+      open_fn = require("packer.util").float,
+    }
+  },
+})
