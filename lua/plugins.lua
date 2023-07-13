@@ -1,3 +1,5 @@
+local configs = require("plugin-config")
+
 local ensure_packer = function()
   local fn = vim.fn
   local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
@@ -9,79 +11,83 @@ local ensure_packer = function()
   return false
 end
 
--- Reload neovim after saving plugins.lua
+-- Packer: Auto compile packer when "plugins.lua" is edited
 vim.cmd([[
-  augroup packer_config_sync
+  augroup packer_user_config
     autocmd!
     autocmd BufWritePost plugins.lua source <afile> | PackerSync
+    autocmd BufWritePost lua/plugin-config.lua source <afile> | PackerCompile | echo("Recompiled")
   augroup end
 ]])
 
 local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(function(use)
+  -- Package managers
   use 'wbthomason/packer.nvim'
-  -- Icons and Colorschemes
+
+  -- LSP-related
   use {
-    'nvim-tree/nvim-web-devicons',
+    'williamboman/mason.nvim',
+    run = ':MasonUpdate',
+    config = configs.mason,
   }
-
-  use 'folke/tokyonight.nvim'
-  use 'cocopon/iceberg.vim'
-  use 'AlexvZyl/nordic.nvim'
-
   use {
-    'nvim-tree/nvim-tree.lua',
-    requires = {
-      'nvim-tree/nvim-web-devicons'
-    },
+    "williamboman/mason-lspconfig.nvim",
+    requires = { "williamboman/mason.nvim" },
+    after = {"mason.nvim", "nvim-lspconfig" },
+    config = configs.mason_lspconfig,
   }
-
-
   use {
-    'nvim-lualine/lualine.nvim',
-    requires = {
-      'nvim-tree/nvim-web-devicons', opt=true
-    }
+    "neovim/nvim-lspconfig",
+    after = { "mason.nvim" },
   }
-
   use {
-    'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate'
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate",
+    config = configs.nvim_treesitter,
   }
-
-  use {
-    'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
-    requires = {
-      'nvim-lua/plenary.nvim',
-      'nvim-treesitter/nvim-treesitter',
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' 
-      }
-    }
-  }
-
   use {
     'numToStr/Comment.nvim',
-    config = function()
-      require('Comment').setup()
-    end,
+    config = configs.Comment,
     after = 'nvim-treesitter',
   }
 
+  -- Colors/Icons
+  use 'AlexvZyl/nordic.nvim'
   use {
-    'nvim-lua/lsp-status.nvim',
-    requires = {
-      'neovim/nvim-lspconfig'
-    }
+    'nvim-tree/nvim-web-devicons',
+    config = configs.nvim_web_devicons,
   }
 
+  -- Navigation/Search
+  use {
+    'nvim-tree/nvim-tree.lua',
+    config = configs.nvimtree,
+  }
+  use {
+    'nvim-telescope/telescope.nvim', tag = '0.1.2',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = configs.telescope
+  }
+
+  -- Status
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { "nvim-tree/nvim-web-devicons" },
+    config = configs.lualine,
+  }
+  use {
+    "folke/trouble.nvim",
+    requires = { "nvim-tree/nvim-web-devicons" }
+  }
+
+  -- Utilities
+  use 'nvim-lua/plenary.nvim'
   use {
     'iamcco/markdown-preview.nvim',
     run = 'cd app && npm install',
-    setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
+    setup = configs.markdown_preview,
     ft = {'markdown'},
   }
 

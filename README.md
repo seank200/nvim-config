@@ -1,6 +1,7 @@
-# Nvim Config
+# Neovim Config
 
 ![screenshot](screenshot.png)
 
-* Plugins managed by `packer`
-* Custom keymaps, settings, configs
+* Colorscheme: [nordic.nvim](https://github.com/AlexvZyl/nordic.nvim)
+* LSP/Highlights configured (no autocomplete)
+
