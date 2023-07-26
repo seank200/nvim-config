@@ -36,7 +36,7 @@ return require('packer').startup({
     use {
       "williamboman/mason-lspconfig.nvim",
       requires = { "williamboman/mason.nvim", "neovim/nvim-lspconfig", "hrsh7th/nvim-cmp" },
-      after = {"mason.nvim", "nvim-lspconfig" },
+      after = {"mason.nvim", "nvim-lspconfig", "nvim-cmp" },
       config = configs.mason_lspconfig,
     }
     use {
@@ -53,9 +53,32 @@ return require('packer').startup({
       config = configs.Comment,
       after = 'nvim-treesitter',
     }
-
+    use {
+      'prettier/vim-prettier',
+      run = "npm install --omit=dev",
+      ft = {
+        'javascript',
+        'typescript',
+        'javascriptreact',
+        'typescriptreact',
+        'css',
+        'less',
+        'scss',
+        'json',
+        'graphql',
+        'markdown',
+        'vue',
+        'svelte',
+        'yaml',
+        'html',
+      }
+    }
     -- Colors/Icons
     use 'AlexvZyl/nordic.nvim'
+    use {
+      'catppuccin/nvim',
+      as = 'catppuccin',
+    }
     use {
       'nvim-tree/nvim-web-devicons',
       config = configs.nvim_web_devicons,
@@ -84,18 +107,18 @@ return require('packer').startup({
     }
 
     -- Autocomplete
-    use {
-      'hrsh7th/nvim-cmp',
-      requires = {
-        'hrsh7th/cmp-buffer',
-        'hrsh7th/cmp-path',
-        'hrsh7th/cmp-cmdline',
-        'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-vsnip',
-        'hrsh7th/vim-vsnip',
-      },
-      config = configs.nvim_cmp,
-    }
+    -- use {
+    --   'hrsh7th/nvim-cmp',
+    --   requires = {
+    --     'hrsh7th/cmp-buffer',
+    --     'hrsh7th/cmp-path',
+    --     'hrsh7th/cmp-cmdline',
+    --     'hrsh7th/cmp-nvim-lsp',
+    --     'hrsh7th/cmp-vsnip',
+    --     'hrsh7th/vim-vsnip',
+    --   },
+    --   config = configs.nvim_cmp,
+    -- }
 
     -- Utilities
     use 'nvim-lua/plenary.nvim'
@@ -105,6 +128,7 @@ return require('packer').startup({
       setup = configs.markdown_preview,
       ft = {'markdown'},
     }
+    use 'christoomey/vim-tmux-navigator'
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins

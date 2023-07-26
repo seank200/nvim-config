@@ -26,21 +26,19 @@ local configs = {
         "vimls",
       },
     }
+    -- local capabilities = require("cmp_nvim_lsp").default_capabilities()
     require("mason-lspconfig").setup_handlers {
-
       -- Default handler for all lsp servers
       function(server_name)
-        local capabilities = require("cmp_nvim_lsp").default_capabilities()
         require("lspconfig")[server_name].setup {
-          capabilities = capabilities,
+          -- capabilities = capabilities,
         }
       end,
 
       -- Overrides for specific languages
       ["lua_ls"] = function()
-        local capabilities = require("cmp_nvim_lsp").default_capabilities()
         require("lspconfig").lua_ls.setup {
-          capabilites = capabilities,
+          -- capabilites = capabilities,
           settings = {
             Lua = {
               diagnostics = {
@@ -53,13 +51,13 @@ local configs = {
       end,
 
       ["matlab_ls"] = function()
-        local capabilities = require("cmp_nvim_lsp").default_capabilities()
         require("lspconfig").matlab_ls.setup {
+          -- capabilities = capabilities,
           settings = {
             matlab = {
               indexWorkspace = false,
               installPath = "/Applications/MATLAB_R2023a.app",
-              matlabConnectionTiming = "onDemand",
+              matlabConnectionTiming = "onStart",
               telemetry = false,
             }
           }
@@ -70,7 +68,10 @@ local configs = {
 
   nvim_treesitter = function()
     require("nvim-treesitter.configs").setup {
-      highlight = { enable = true },
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false
+      },
       indent = { enable = true },
       ensure_installed = {
         "bash",
@@ -81,7 +82,7 @@ local configs = {
         "css",
         "diff",
         "dockerfile",
-        "fortran",
+        -- "fortran",
         "git_rebase",
         "gitcommit",
         "gitignore",
@@ -126,16 +127,20 @@ local configs = {
     require("lualine").setup {
       options = {
         disabled_filetypes = { "packer", "NvimTree", "Telescope" },
+        section_separators = { left = " ", right = " ", },
+        component_separators = { left = "", right = "" },
       },
       sections = {
-        lualine_b = { "diagnostics" },
-        lualine_c = { "filename" },
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = { "filename", "diagnostics" },
         lualine_x = {
+          { "diff" },
           { "location", separator = "" },
           { "progress", separator = "" },
         },
-        lualine_y = { "diff" },
-        lualine_z = { "branch" }
+        lualine_y = {},
+        lualine_z = {},
       },
       tabline = {
         lualine_c = {
@@ -150,21 +155,35 @@ local configs = {
     }
   end,
 
-  nvim_cmp = function()
-    local cmp = require("cmp")
-
-    cmp.setup({
-      snippet = {
-        expand = function(args) vim.fn["vsnip#anonymous"](args.body) end,
-      },
-      sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'vsnip' },
-      }, {
-        { name = 'buffer' }
-      })
-    })
-  end,
+  -- nvim_cmp = function()
+  --   local cmp = require("cmp")
+  --
+  --   cmp.setup({
+  --     enabled = function ()
+  --       local context = require "cmp.config.context"
+  --       if vim.api.nvim_get_mode().mode == 'c' then
+  --         return true
+  --       else
+  --         return not context.in_treesitter_capture("comment") and
+  --           not context.in_syntax_group("Comment")
+  --       end
+  --     end,
+  --     snippet = {
+  --       expand = function(args) vim.fn["vsnip#anonymous"](args.body) end,
+  --     },
+  --     preselect = cmp.PreselectMode.None,
+  --     mapping = cmp.mapping.preset.insert({
+  --       ['<C-Space>'] = cmp.mapping.complete(),
+  --       ['<CR>'] = cmp.mapping.confirm({ select = false, }),
+  --     }),
+  --     sources = cmp.config.sources({
+  --       { name = 'nvim_lsp' },
+  --       { name = 'vsnip' },
+  --     }, {
+  --       { name = 'buffer' }
+  --     })
+  --   })
+  -- end,
 
   markdown_preview = function()
     vim.g.mkdp_filetypes = { "markdown" }

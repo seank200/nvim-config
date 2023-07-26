@@ -11,5 +11,6 @@ vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.termguicolors = true
 
-vim.cmd.colorscheme("nordic")
+-- vim.cmd.colorscheme("catppuccin-mocha")
+vim.cmd.colorscheme("catppuccin-frappe")
 

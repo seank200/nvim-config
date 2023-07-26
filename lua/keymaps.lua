@@ -2,11 +2,25 @@ local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true }
 
 -- Escaping to normal mode
-keymap("t", "<leader>qq", "<C-\\><C-n>", opts)
-keymap("i", "jk", "<Esc>", opts)
+keymap("t", "<leader>qq", "<C-\\><C-n>", opts) -- from terminal
+keymap("i", "jk", "<Esc>", opts) -- from insert
 
 -- Buffer management
-keymap("n", "<leader>bc", ":bp<bar>sp<bar>bn<bar>bd<CR>", opts)
+keymap("n", "<leader>bd", ":bp<bar>sp<bar>bn<bar>bd<CR>", opts) -- close buffer without closing window
+keymap("n", "<leader>bp", ":bp<CR>", opts) -- previous buffer
+keymap("n", "<leader>bn", ":bn<CR>", opts) -- next buffer
+keymap("v", "<leader>bd", ":bp<bar>sp<bar>bn<bar>bd<CR>", opts) -- close buffer without closing window
+keymap("v", "<leader>bp", ":bp<CR>", opts) -- previous buffer
+keymap("v", "<leader>bn", ":bn<CR>", opts) -- next buffer
+
+-- Register management
+keymap("n", "<C-p>", "\"0p", opts);
+
+-- Window navigation
+keymap("n", "<leader>ws", "<C-w>s", opts) -- split horizontally
+keymap("n", "<leader>wv", "<C-w>v", opts) -- split vertically
+keymap("v", "<leader>ws", "<C-w>s", opts) -- split horizontally
+keymap("v", "<leader>wv", "<C-w>v", opts) -- split vertically
 
 -- Nvim Tree
 keymap("n", "<leader>tt", ":NvimTreeToggle<CR>", opts)
