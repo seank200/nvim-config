@@ -1,5 +1,6 @@
 local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true }
+local opt_silent = { noremap = true, silent = true }
 
 -- Escaping to normal mode
 keymap("t", "<leader>qq", "<C-\\><C-n>", opts) -- from terminal
@@ -9,9 +10,13 @@ keymap("i", "jk", "<Esc>", opts) -- from insert
 keymap("n", "<leader>bd", ":bp<bar>sp<bar>bn<bar>bd<CR>", opts) -- close buffer without closing window
 keymap("n", "<leader>bp", ":bp<CR>", opts) -- previous buffer
 keymap("n", "<leader>bn", ":bn<CR>", opts) -- next buffer
+keymap("n", "<F3>", ":bp<CR>", opt_silent);
+keymap("n", "<F4>", ":bn<CR>", opt_silent);
 keymap("v", "<leader>bd", ":bp<bar>sp<bar>bn<bar>bd<CR>", opts) -- close buffer without closing window
 keymap("v", "<leader>bp", ":bp<CR>", opts) -- previous buffer
 keymap("v", "<leader>bn", ":bn<CR>", opts) -- next buffer
+keymap("v", "<F3>", ":bp<CR>", opt_silent);
+keymap("v", "<F4>", ":bn<CR>", opt_silent);
 
 -- Register management
 keymap("n", "<C-p>", "\"0p", opts);
