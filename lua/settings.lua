@@ -11,6 +11,5 @@ vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.termguicolors = true
 
--- vim.cmd.colorscheme("catppuccin-mocha")
-vim.cmd.colorscheme("catppuccin-frappe")
+vim.cmd.colorscheme("catppuccin-macchiato")
 

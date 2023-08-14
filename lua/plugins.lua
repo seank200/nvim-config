@@ -71,7 +71,8 @@ return require('packer').startup({
         'svelte',
         'yaml',
         'html',
-      }
+      },
+      config = configs.vim_prettier,
     }
     -- Colors/Icons
     use 'AlexvZyl/nordic.nvim'

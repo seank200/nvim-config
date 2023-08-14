@@ -63,6 +63,32 @@ local configs = {
           }
         }
       end,
+
+      -- Prevent unknown rules error for tailwind directives
+      ["cssls"] = function()
+        require("lspconfig").cssls.setup {
+          settings = {
+            css = {
+              validate = true,
+              lint = {
+                unknownAtRules = "ignore",
+              },
+            },
+            scss = {
+              validate = true,
+              lint = {
+                unknownAtRules = "ignore",
+              },
+            },
+            less = {
+              validate = true,
+              lint = {
+                unknownAtRules = "ignore",
+              },
+            },
+          }
+        }
+      end,
     }
   end,
 
@@ -188,6 +214,11 @@ local configs = {
   markdown_preview = function()
     vim.g.mkdp_filetypes = { "markdown" }
     vim.g.mkdp_echo_preview_url = 1
+  end,
+
+  vim_prettier = function()
+    vim.g["prettier#autoformat_config_present"] = 1
+    vim.g["prettier#autoformat_require_pragma"] = 0
   end,
 }
 return configs
