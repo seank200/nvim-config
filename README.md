@@ -1,7 +1,6 @@
-# Neovim Config
+# My Neovim Config
 
-![screenshot](screenshot.png)
+Customized from [ LazyVim ](https://www.lazyvim.org) configs. Requires [ Nerd Fonts ](https://www.nerdfonts.com) and `termguicolors`.
 
-* Colorscheme: [nordic.nvim](https://github.com/AlexvZyl/nordic.nvim)
-* LSP/Highlights configured (no autocomplete)
-
+![Screenshot - Dashboard](screenshot-1.png)
+![Screenshot - Editor](screenshot-2.png)
