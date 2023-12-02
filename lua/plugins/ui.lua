@@ -74,6 +74,7 @@ return {
         { "branch", icon = "" },
       }
       opts.sections.lualine_y = {
+        { "selectioncount", padding = 1 },
         { "progress", padding = 1 },
       }
       opts.sections.lualine_z = {
