@@ -99,3 +99,4 @@ tags
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,lua,vim
 
+packer_compiled.lua
