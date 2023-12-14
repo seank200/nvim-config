@@ -64,4 +64,8 @@ config.telescope_fzf = function()
 	require("telescope").load_extension("fzf")
 end
 
+config.diffview = function()
+	require("diffview").setup()
+end
+
 return config

@@ -75,6 +75,10 @@ return require("packer").startup(function(use)
 		config = require("seank200.plugins.editor").telescope_fzf,
 	})
 	use({ "nvim-pack/nvim-spectre" })
+	use({
+		"sindrets/diffview.nvim",
+		config = require("seank200.plugins.editor").diffview,
+	})
 
 	-- Formatting
 	use({

@@ -8,6 +8,9 @@ config.neo_tree = function()
 		close_if_last_window = false,
 		enable_git_status = true,
 		enable_diagnostics = true,
+		filesystem = {
+			hijack_netrw_behavior = "open_current",
+		},
 		default_component_configs = {
 			git_status = {
 				symbols = {
@@ -79,21 +82,24 @@ config.bufferline = function()
 end
 
 config.dashboard = function()
-	local logo = [[
+	local header = [[
                               ______ _____________________ 
     __________________ __________  //_/_|__ \_  __ \_  __ \
     __  ___/  _ \  __ `/_  __ \_  ,<  ____/ /  / / /  / / /
     _(__  )/  __/ /_/ /_  / / /  /| | _  __// /_/ // /_/ / 
     /____/ \___/\__,_/ /_/ /_//_/ |_| /____/\____/ \____/  
     ]]
-	logo = string.rep("\n", 4) .. logo .. "\n"
+	header = string.rep("\n", 2) .. header .. "\n"
+	header = header .. os.date("%A, %B %d, %Y") .. string.rep("\n", 2)
+
 	require("dashboard").setup({
 		theme = "hyper",
+		shortcut_type = "number",
 		hide = {
 			statusline = false,
 		},
 		config = {
-			header = vim.split(logo, "\n"),
+			header = vim.split(header, "\n"),
 			shortcut = {
 				{ icon = " ", desc = "Files", key = "f", action = "Telescope find_files", group = "String" },
 				{ icon = "󱎸 ", desc = "Text", key = "g", action = "Telescope live_grep", group = "Constant" },
@@ -118,19 +124,21 @@ config.dashboard = function()
 				limit = 8,
 				cwd_only = true,
 			},
-			footer = {},
+			footer = {
+				"",
+				"",
+				"☕️ A pot of coffee, 12 jammy dodgers and a fez",
+			},
 		},
 	})
 end
 
 config.lualine = function()
 	local lualine_edge = {
-		{
-			function()
-				return " "
-			end,
-			padding = 0,
-		},
+		function()
+			return " "
+		end,
+		padding = 0,
 	}
 
 	local section_filetype = {
@@ -139,6 +147,7 @@ config.lualine = function()
 		colored = true,
 		icon_only = true,
 	}
+
 	local section_filename = {
 		"filename",
 		path = 1,
@@ -149,10 +158,12 @@ config.lualine = function()
 			newfile = "[New]", -- Text to show for newly created file before first write
 		},
 	}
+
 	local section_branch = {
 		"branch",
 		icon = "",
 	}
+
 	require("lualine").setup({
 		options = {
 			component_separators = "",
@@ -166,12 +177,12 @@ config.lualine = function()
 			globalstatus = true,
 		},
 		sections = {
-			lualine_a = lualine_edge,
-			lualine_b = { section_branch },
-			lualine_c = { section_filetype, section_filename, "diagnostics", "diff" },
+			lualine_a = { lualine_edge },
+			lualine_b = {},
+			lualine_c = { section_branch, section_filetype, section_filename, "diagnostics", "diff" },
 			lualine_x = { "selection", "progress", "location" },
 			lualine_y = {},
-			lualine_z = lualine_edge,
+			lualine_z = { lualine_edge },
 		},
 		inactive_sections = {
 			lualine_a = {},
