@@ -13,7 +13,6 @@ vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
--- vim.opt.colorscheme = 'catppuccin-mocha'
 
 vim.opt.scrolloff = 4
 
