@@ -44,6 +44,14 @@ config.neo_tree = function()
 	end)
 end
 
+config.gitsigns = function()
+	require("gitsigns").setup({
+		update_debounce = 200,
+	})
+
+	vim.keymap.set("n", "<leader>bl", "<cmd>Gitsigns toggle_current_line_blame<CR>", { noremap = true })
+end
+
 config.illuminate = function()
 	require("illuminate").configure({
 		delay = 500,
@@ -102,14 +110,7 @@ config.dashboard = function()
 			header = vim.split(header, "\n"),
 			shortcut = {
 				{ icon = " ", desc = "Files", key = "f", action = "Telescope find_files", group = "String" },
-				{ icon = "󱎸 ", desc = "Text", key = "g", action = "Telescope live_grep", group = "Constant" },
-				{
-					icon = "󰀖 ",
-					desc = "Config",
-					key = "c",
-					action = "lua require('telescope.builtin').find_files({ cwd = vim.fn.stdpath('config') })",
-					group = "Statement",
-				},
+				{ icon = "󱎸 ", desc = "Grep", key = "g", action = "Telescope live_grep", group = "Constant" },
 				{
 					icon = " ",
 					desc = "Restore",
@@ -117,13 +118,20 @@ config.dashboard = function()
 					action = "lua require('persistence').load()",
 					group = "Character",
 				},
-                {
-                    icon = "󰊢 ",
-                    desc = "Diff",
-                    key = "d",
-                    action = "DiffviewOpen",
-                    group = "Error",
-                },
+				{
+					icon = "󰊢 ",
+					desc = "Diff",
+					key = "d",
+					action = "DiffviewOpen",
+					group = "Type",
+				},
+				{
+					icon = "󰀖 ",
+					desc = "Config",
+					key = "c",
+					action = "lua require('telescope.builtin').find_files({ cwd = vim.fn.stdpath('config') })",
+					group = "Statement",
+				},
 				{ icon = " ", desc = "Quit", key = "q", group = "Error", action = "qa" },
 			},
 			project = { enable = false },
