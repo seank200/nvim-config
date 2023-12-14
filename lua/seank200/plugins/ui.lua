@@ -117,7 +117,14 @@ config.dashboard = function()
 					action = "lua require('persistence').load()",
 					group = "Character",
 				},
-				{ icon = " ", desc = "Quit", key = "q", action = "qa" },
+                {
+                    icon = "󰊢 ",
+                    desc = "Diff",
+                    key = "d",
+                    action = "DiffviewOpen",
+                    group = "Error",
+                },
+				{ icon = " ", desc = "Quit", key = "q", group = "Error", action = "qa" },
 			},
 			project = { enable = false },
 			mru = {
@@ -127,7 +134,7 @@ config.dashboard = function()
 			footer = {
 				"",
 				"",
-				"☕️ A pot of coffee, 12 jammy dodgers and a fez",
+				"☕️ A pot of coffee, 12 jammy dodgers and a fez!",
 			},
 		},
 	})

@@ -65,7 +65,29 @@ config.telescope_fzf = function()
 end
 
 config.diffview = function()
-	require("diffview").setup()
+    local actions = require("diffview.actions")
+	require("diffview").setup({
+        keymaps = {
+            view = {
+                { 'n', '<leader>e', actions.toggle_files, { desc = "Toggle the file panel."} },
+                { 'n', 'gl', actions.cycle_layout, { desc = "Cycle through available layouts."} },
+                { 'n', 'q', actions.close, { desc = "Close Diffview tab" } },
+            },
+            file_panel = {
+                { 'n', '<leader>e', actions.toggle_files, { desc = "Toggle the file panel."} },
+                { 'n', 'q', actions.close, { desc = "Close Diffview tab" } },
+            },
+            file_history_panel = {
+                { 'n', '<leader>e', actions.toggle_files, { desc = "Toggle the file panel."} },
+                { 'n', 'q', actions.close, { desc = "Close Diffview tab" } },
+            },
+        }
+    })
+
+    vim.keymap.set("n", "<leader>df", "<cmd>DiffviewOpen<CR>", opts)
+    vim.keymap.set("n", "<leader>dh", "<cmd>DiffviewFileHistory<CR>", opts)
+    vim.keymap.set("n", "<leader>dc", "<cmd>DiffviewClose<CR>", opts)
+
 end
 
 return config
