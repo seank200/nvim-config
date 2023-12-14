@@ -20,11 +20,16 @@ set wrap!
 set hlsearch
 set incsearch
 
+set backspace 
+
 " Colors
-set termguicolors
+" set termguicolors
 
 " Scrolling
 set scrolloff=4
+
+" Backspace options (for vim, mostly)
+set backspace=indent,eol,start
 
 " Basic key remaps
 let g:mapleader = " "
