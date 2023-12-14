@@ -10,14 +10,19 @@ config.lsp_zero = function()
 	lsp_zero.on_attach(function(_, bufnr)
 		-- see :help lsp-zero-keybindings
 		lsp_zero.default_keymaps({ buffer = bufnr })
+		vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { noremap = true, silent = true, buffer = bufnr })
 	end)
 	lsp_zero.setup()
+
+	local lspconfig = require("lspconfig")
 
 	require("mason-lspconfig").setup({
 		ensure_installed = {
 			"bashls",
 			"clangd",
-			"matlab_ls",
+			"dockerls",
+			"jsonls",
+			-- "matlab_ls",
 			"lua_ls",
 			"pylsp",
 			"tsserver",
@@ -25,17 +30,17 @@ config.lsp_zero = function()
 		handlers = {
 			lsp_zero.default_setup,
 			lua_ls = function()
-				require("lspconfig").lua_ls.setup(lsp_zero.nvim_lua_ls())
+				lspconfig.lua_ls.setup(lsp_zero.nvim_lua_ls())
 			end,
-			matlab_ls = function()
-				require("lspconfig").matlab_ls.setup({
-					settings = {
-						MATLAB = {
-							installPath = "/Applications/MATLAB_R2022a.app/bin/matlab",
-						},
-					},
-				})
-			end,
+			-- matlab_ls = function()
+			-- 	lspconfig.matlab_ls.setup({
+			-- 		settings = {
+			-- 			MATLAB = {
+			-- 				installPath = "/Applications/MATLAB_R2022a.app/bin/matlab",
+			-- 			},
+			-- 		},
+			-- 	})
+			-- end,
 		},
 	})
 
