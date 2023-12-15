@@ -1,7 +1,7 @@
 local config = {}
 
-config.treesitter = function ()
-    require'nvim-treesitter.configs'.setup {
+config.treesitter = function()
+    require 'nvim-treesitter.configs'.setup {
         ensure_installed = {
             "javascript",
             "typescript",
@@ -48,10 +48,10 @@ config.treesitter = function ()
     }
 end
 
-config.treesitter_context = function ()
+config.treesitter_context = function()
     require("treesitter-context").setup({
         enable = true,
-        max_lines = 5,
+        max_lines = 4,
         min_window_height = 10,
         mode = 'cursor',
     })
