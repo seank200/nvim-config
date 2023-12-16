@@ -1,76 +1,77 @@
 # Neovim Configuration
 
-My Neovim configuration.
+My Neovim configuration
 
 ![screenshot](screenshot.png)
+
+## Config Overview
+
+- Syntax highlighting, auto-complete suggestions
+- Format on save and linter messages
+- Fuzzy file and text searching
+- Diff and conflict viewer
+- Smart split/resizing: (plays nicely with `tmux`)
 
 ## Requirements
 
 - [Neovim](https://neovim.io): Latest stable release (tested on 0.9.4)
-- [Git](https://git-scm.com): (_Hopefully self-explanatory_)
+- [Git](https://git-scm.com)
 - [GNU Make](https://www.gnu.org/software/make/)
 - [fzf](https://github.com/junegunn/fzf#installation): Improve fuzzy search performance
 - [rg](https://github.com/BurntSushi/ripgrep#installation): Search text within directory files (and more)
+- [gnu-sed](https://www.gnu.org/software/sed/) ([Homebrew](https://formulae.brew.sh/formula/gnu-sed))
 - [NodeJS & NPM](https://nodejs.org): Building some of the dependencies
 - [Nerd fonts](https://www.nerdfonts.com) patched font
-    - Recommended: JetBarinsMono Nerd Font ([Download](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip))
     - Installation instructions at the [Nerd Fonts repo](https://github.com/ryanoasis/nerd-fonts)
 
-## Optional Requirements
-
-### Neovim Python Provider
+### macOS (Homebrew)
 
 ```bash
-pip install -U neovim
+brew tap homebrew/cask-fonts
+brew install font-jetbrains-mono-nerd-font
 ```
 
-### Neovim Node Provider
-
 ```bash
-npm install -g neovim
+brew install neovim fzf ripgrep gnu-sed
 ```
 
 ## Clean up
 
-If you have previous configurations, run the following first to remove previous configuations.
+If you have existing configurations, run the following first to remove them.
 
 ```bash
 if [[ -d ~/.config/nvim ]]; then; mv ~/.config/nvim ~/.config/nvim.bak; fi
 if [[ -d ~/.local/share/nvim ]]; then; rm -rf ~/.local/share/nvim; fi
+if [[ -d ~/.local/state/nvim ]]; then; rm -rf ~/.local/state/nvim; fi
 if [[ -d ~/.cache/nvim ]]; then; rm -rf ~/.cache/nvim; fi
 ```
 
 Launch Neovim and confirm that it has been restored to default configurations.
 
-```bash
-nvim
-```
-
-## Usage
-
-### Clone Repo
-
-#### MacOS, Linux
+## Install Config
 
 ```bash
 git clone https://github.com/seanK200/nvim-config.git ~/.config/nvim
 ```
 
-#### Windows
-
-- Tutorial WIP
-
-### Just Launch Neovim
+## (Optional) Install Neovim Providers
 
 ```bash
-nvim
+pip install -U neovim
+npm install -g neovim
 ```
 
 ## Troubleshooting
 
-If some dependencies fail to install, re-launch Neovim a second time with the following flags.
+If some dependencies fail to install, re-launch Neovim with the following commands.
 
 ```bash
 nvim +PackerSync
+```
+
+Check that everything went well with the `checkhealth` Neovim command. You should see no `ERROR` messages.
+
+```vim
+:checkhealth
 ```
 
