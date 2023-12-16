@@ -211,6 +211,11 @@ return require("packer").startup({
             "folke/persistence.nvim",
             config = config.utils.persistence,
         })
+        use({
+            "iamcco/markdown-preview.nvim",
+            run = function() vim.fn["mkdp#util#install"]() end,
+            ft = { 'markdown' },
+        })
 
         -- Automatically install and configure if packer was first installed
         if packer_bootstrap then
