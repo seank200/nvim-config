@@ -57,4 +57,8 @@ config.treesitter_context = function()
     })
 end
 
+config.ts_autotag = function()
+    require("nvim-ts-autotag").setup()
+end
+
 return config

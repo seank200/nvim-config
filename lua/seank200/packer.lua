@@ -88,7 +88,12 @@ return require("packer").startup({
             },
             config = config.editor.telescope_fzf,
         })
-        use({ "nvim-pack/nvim-spectre" })
+        use({
+            "nvim-pack/nvim-spectre",
+            requires = {
+                { "nvim-lua/plenary.nvim" },
+            },
+        })
         use({
             "sindrets/diffview.nvim",
             config = config.editor.diffview,
@@ -155,6 +160,19 @@ return require("packer").startup({
             requires = "nvim-treesitter/nvim-treesitter",
             config = config.treesitter.treesitter_context,
         })
+        use {
+            "windwp/nvim-ts-autotag",
+            config = config.treesitter.ts_autotag,
+            ft = {
+                "html",
+                "xml",
+                "javascript",
+                "javascriptreact",
+                "typescript",
+                "typescriptreact",
+                "markdown",
+            },
+        }
 
         -- UI
         use({
