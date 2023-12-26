@@ -5,14 +5,13 @@ vim.opt.rnu = true
 -- Indents
 vim.opt.expandtab = true
 vim.opt.smartindent = true
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
 
-vim.cmd [[ autocmd FileType javascript setlocal sw=2 ts=2 sts=2 ]]
-vim.cmd [[ autocmd FileType javascriptreact setlocal sw=2 ts=2 sts=2 ]]
-vim.cmd [[ autocmd FileType typescript setlocal sw=2 ts=2 sts=2 ]]
-vim.cmd [[ autocmd FileType typescriptreact setlocal sw=2 ts=2 sts=2 ]]
+vim.cmd [[ autocmd FileType c setlocal sw=4 ts=4 ]]
+vim.cmd [[ autocmd FileType cpp setlocal sw=4 ts=4 ]]
+vim.cmd [[ autocmd FileType python setlocal sw=4 ts=4 ]]
+
 
 vim.opt.wrap = false
 
